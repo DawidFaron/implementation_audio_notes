@@ -18,7 +18,13 @@ EMBEDDING_MODEL = "text-embedding-3-large"
 QDRANT_COLLECTION_NAME = "notes"
 
 env = dotenv_values(".env")
-
+### Secrets using Streamlit Cloud Mechanism
+# https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management
+if 'QDRANT_URL' in st.secrets:
+    env['QDRANT_URL'] = st.secrets['QDRANT_URL']
+if 'QDRANT_API_KEY' in st.secrets:
+    env['QDRANT_API_KEY'] = st.secrets['QDRANT_API_KEY']
+###
 
 #
 # FUNCTIONS
@@ -41,8 +47,8 @@ def openai_whisper(audio_buffer):
 @st.cache_resource
 def get_qdrant_client():
     return QdrantClient(
-    url="https://8b4853b0-68ad-47bc-9b46-296189bb689c.europe-west3-0.gcp.cloud.qdrant.io:6333", 
-    api_key="wFHCy66r3CAUtk3yk_KrRGEUR-GqfjbxaQLnVcmgIcFMkvVXCoDHSQ",
+    url=env["QDRANT_URL"], 
+    api_key=env["QDRANT_API_KEY"],
 )
 
 def assure_db_collection_exists():
