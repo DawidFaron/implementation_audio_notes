@@ -13,3 +13,4 @@ pydantic-core==2.27.2
 python-dotenv==1.0.1
 scikit-learn==1.4.2
 streamlit==1.37.0
+streamlit-audiorecorder==0.0.6
